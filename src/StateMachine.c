@@ -22,14 +22,15 @@ typedef struct {
     void (*func)(void);
 } stateFunctionRow_t;
 
+
 /// \brief  Maps a state to it's state transition function, which should be called
 ///         when the state transitions into this state.
 /// \warning    This has to stay in sync with the state_t enum!
 static stateFunctionRow_t stateFunctionA[] = {
       // NAME         // FUNC
-    { "ST_IDLE",      &Led_Idle },      // ST_IDLE
-    { "ST_LED_ON",    &Led_On },        // ST_LED_ON
-    { "ST_LED_OFF",   &Led_Off },       // ST_LED_OFF
+    { "ST_GREEN",      &Green_Light    },      // ST_GREEN
+    { "ST_YELLOW",     &Yellow_Light   },      // ST_YELLOW
+    { "ST_RED",        &Red_Light      },      // ST_RED
 };
 
 typedef struct {
@@ -39,17 +40,15 @@ typedef struct {
 } stateTransMatrixRow_t;
 
 static stateTransMatrixRow_t stateTransMatrix[] = {
-    // CURR STATE  // EVENT              // NEXT STATE
-    { ST_IDLE,     EV_BUTTON_PUSHED,     ST_LED_ON  },
-    { ST_LED_ON,   EV_TIME_OUT,          ST_LED_OFF },
-    { ST_LED_ON,   EV_BUTTON_PUSHED,     ST_IDLE    },
-    { ST_LED_OFF,  EV_TIME_OUT,          ST_LED_ON  },
-    { ST_LED_OFF,  EV_BUTTON_PUSHED,     ST_IDLE    }
+    // CURR STATE  // EVENT        // NEXT STATE
+    { ST_RED,      EV_TIMER_32,    ST_GREEN   },
+    { ST_YELLOW,   EV_TIMER_8,     ST_RED     },
+    { ST_GREEN,    EV_TIMER_50,    ST_YELLOW  },
 };
 
 void StateMachine_Init(stateMachine_t * stateMachine) {
     printf("Initialising state machine.\r\n");
-    stateMachine->currState = ST_IDLE;
+    stateMachine->currState =ST_RED;
 }
 
 void StateMachine_RunIteration(stateMachine_t *stateMachine, event_t event) {

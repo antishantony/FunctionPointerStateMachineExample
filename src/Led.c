@@ -10,18 +10,14 @@
 
 #include <stdio.h>
 
-void Led_Init() {
-    printf("Led_Init() called.\r\n");
+void Green_Light() {
+    printf("GREEN Light ON. OTHERS TURNED OFF\r\n");
 }
 
-void Led_On() {
-    printf("LED turned on.\r\n");
+void Red_Light() {
+    printf("RED Light ON. OTHERS TURNED OFF\r\n");
 }
 
-void Led_Off() {
-    printf("LED turned off.\r\n");
-}
-
-void Led_Idle() {
-    printf("LED in idle state.\r\n");
+void Yellow_Light() {
+    printf("YELLOW Light ON. OTHERS TURNED OFF\r\n");
 }

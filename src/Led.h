@@ -12,8 +12,8 @@
 #define LED_H
 
 void Led_Init();
-void Led_Idle();
-void Led_On();
-void Led_Off();
+void Green_Light();
+void Yellow_Light();
+void Red_Light();
 
 #endif // #ifndef LED_H

@@ -8,6 +8,14 @@
 /// \details
 ///		See README.md in root dir for more info.
 
+/* Modelling a Traffic light State machine
+
+State	Input	    Next state	    Output
+Green	Timer 50s	Yellow	        Green light on, others off
+Yellow	Timer 8s	Red	            Yellow light on, others off
+Red	    Timer 32s	Green	        Red light on, others off
+
+*/
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -20,31 +28,24 @@ int main() {
     stateMachine_t stateMachine;
 
     StateMachine_Init(&stateMachine);
-    printf("State is now %s.\r\n", StateMachine_GetStateName(stateMachine.currState));
+    printf("State is now in default RED Light %s.\r\n", StateMachine_GetStateName(stateMachine.currState));
 
-    // Push button to start flasher
-    printf("Button pushed.\r\n");
-    StateMachine_RunIteration(&stateMachine, EV_BUTTON_PUSHED);
-    printf("State is now %s.\r\n", StateMachine_GetStateName(stateMachine.currState));
-
-    // Timeout
-    printf("Timeout.\r\n");
-    StateMachine_RunIteration(&stateMachine, EV_TIME_OUT);
+    printf("32 Sec Time Out.\r\n");
+    StateMachine_RunIteration(&stateMachine, EV_TIMER_32);
     printf("State is now %s.\r\n", StateMachine_GetStateName(stateMachine.currState));
 
     // Timeout
-    printf("Timeout.\r\n");
-    StateMachine_RunIteration(&stateMachine, EV_TIME_OUT);
+    printf("50 Sec Time Out.\r\n");
+    StateMachine_RunIteration(&stateMachine, EV_TIMER_50);
     printf("State is now %s.\r\n", StateMachine_GetStateName(stateMachine.currState));
 
     // Timeout
-    printf("Timeout.\r\n");
-    StateMachine_RunIteration(&stateMachine, EV_TIME_OUT);
+    printf("8 Sec Time Out.\r\n");
+    StateMachine_RunIteration(&stateMachine, EV_TIMER_8);
     printf("State is now %s.\r\n", StateMachine_GetStateName(stateMachine.currState));
 
-    // Push button again to stop flasher
-    printf("Button pushed.\r\n");
-    StateMachine_RunIteration(&stateMachine, EV_BUTTON_PUSHED);
+    printf("32 Sec Time Out.\r\n");
+    StateMachine_RunIteration(&stateMachine, EV_TIMER_32);
     printf("State is now %s.\r\n", StateMachine_GetStateName(stateMachine.currState));
 
     return 0;
